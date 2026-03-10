@@ -15,18 +15,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.16.0"
+          flutter-version: "3.22.0"
 
-      - name: Create Flutter Project
+      - name: Create Flutter project
         run: flutter create app
 
-      - name: Copy Source Code
+      - name: Copy source
         run: |
           cp -r lib app/
           cp pubspec.yaml app/
@@ -35,9 +35,9 @@ jobs:
         run: |
           cd app
           flutter pub get
-          flutter build web
+          flutter build web --base-href /WOG-App/
 
-      - name: Upload Pages Artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: app/build/web
