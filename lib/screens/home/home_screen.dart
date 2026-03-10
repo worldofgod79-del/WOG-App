@@ -25,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(
         title: const Text("WOG App"),
       ),
@@ -37,7 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: BoxDecoration(color: Colors.blue),
               child: Text(
                 "World Of God",
-                style: TextStyle(color: Colors.white, fontSize: 22),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                ),
               ),
             ),
 
@@ -75,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
 
-      body: pages[index],
+      body: index == 0 ? dashboard() : pages[index],
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
@@ -108,6 +112,63 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.live_tv),
             label: "Live",
           ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget dashboard() {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: GridView.count(
+
+        crossAxisCount: 2,
+        crossAxisSpacing: 16,
+        mainAxisSpacing: 16,
+
+        children: [
+
+          card(Icons.menu_book, "Bible", Colors.blue),
+
+          card(Icons.music_note, "Songs", Colors.orange),
+
+          card(Icons.book, "Books", Colors.green),
+
+          card(Icons.live_tv, "Live", Colors.red),
+
+        ],
+      ),
+    );
+  }
+
+  Widget card(IconData icon, String title, Color color) {
+    return Container(
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(18),
+      ),
+
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          Icon(
+            icon,
+            size: 50,
+            color: Colors.white,
+          ),
+
+          const SizedBox(height: 10),
+
+          Text(
+            title,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          )
 
         ],
       ),
