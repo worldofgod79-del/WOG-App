@@ -1,6 +1,7 @@
 name: wog_app
 description: World Of God App
-publish_to: 'none'
+publish_to: "none"
+
 version: 1.0.0+1
 
 environment:
@@ -9,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^1.0.2
 
 flutter:
   uses-material-design: true
