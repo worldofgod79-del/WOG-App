@@ -1,52 +1,50 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(WOGApp());
+  runApp(const WOGApp());
 }
 
 class WOGApp extends StatelessWidget {
+  const WOGApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'WOG App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const HomePage(),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
-  _HomePageState createState() => _HomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
 
-  int selectedIndex = 0;
+  int index = 0;
 
   final pages = [
-    Center(child: Text("Full Bible")),
-    Center(child: Text("Songs")),
-    Center(child: Text("Books")),
-    Center(child: Text("Live")),
+    const Center(child: Text("Full Bible")),
+    const Center(child: Text("Songs")),
+    const Center(child: Text("Books")),
+    const Center(child: Text("Live")),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("WOG App"),
-      ),
+      appBar: AppBar(title: const Text("WOG App")),
 
       drawer: Drawer(
         child: ListView(
-          children: [
-            DrawerHeader(
-              child: Center(child: Text("WOG APP")),
-            ),
+          children: const [
+            DrawerHeader(child: Text("World Of God")),
             ListTile(title: Text("Tracker")),
             ListTile(title: Text("Audio Messages")),
             ListTile(title: Text("Quiz")),
@@ -57,28 +55,20 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      body: pages[selectedIndex],
+      body: pages[index],
 
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: selectedIndex,
-        onTap: (index){
+        currentIndex: index,
+        onTap: (i){
           setState(() {
-            selectedIndex = index;
+            index = i;
           });
         },
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.menu_book),
-              label: "Bible"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.music_note),
-              label: "Songs"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.book),
-              label: "Books"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.live_tv),
-              label: "Live"),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: "Bible"),
+          BottomNavigationBarItem(icon: Icon(Icons.music_note), label: "Songs"),
+          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Books"),
+          BottomNavigationBarItem(icon: Icon(Icons.live_tv), label: "Live"),
         ],
       ),
     );
