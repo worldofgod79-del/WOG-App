@@ -1,4 +1,4 @@
-name: Flutter Debug APK Build
+name: Flutter Web Preview
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
       - main
 
 jobs:
-  build:
+  build-web:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Setup Java
@@ -27,23 +27,19 @@ jobs:
       - name: Create Flutter Project
         run: flutter create app
 
-      - name: Copy Source Code
+      - name: Copy Source
         run: |
           cp -r lib app/
           cp pubspec.yaml app/
 
-      - name: Get Packages
+      - name: Build Web
         run: |
           cd app
           flutter pub get
+          flutter build web
 
-      - name: Build Debug APK
-        run: |
-          cd app
-          flutter build apk --debug
-
-      - name: Upload Debug APK
+      - name: Upload Web Preview
         uses: actions/upload-artifact@v4
         with:
-          name: WOG-Debug-APK
-          path: app/build/app/outputs/flutter-apk/app-debug.apk
+          name: WOG-Web
+          path: app/build/web
