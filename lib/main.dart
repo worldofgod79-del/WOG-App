@@ -12,7 +12,9 @@ class WOGApp extends StatelessWidget {
     return MaterialApp(
       title: 'WOG App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
       home: const HomePage(),
     );
   }
@@ -27,48 +29,108 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  int index = 0;
+  int currentIndex = 0;
 
-  final pages = [
-    const Center(child: Text("Full Bible")),
-    const Center(child: Text("Songs")),
-    const Center(child: Text("Books")),
-    const Center(child: Text("Live")),
+  final List<Widget> pages = const [
+    Center(child: Text("Full Bible", style: TextStyle(fontSize: 22))),
+    Center(child: Text("Songs", style: TextStyle(fontSize: 22))),
+    Center(child: Text("Books", style: TextStyle(fontSize: 22))),
+    Center(child: Text("Live", style: TextStyle(fontSize: 22))),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("WOG App")),
+      appBar: AppBar(
+        title: const Text("WOG App"),
+      ),
 
       drawer: Drawer(
         child: ListView(
+          padding: EdgeInsets.zero,
           children: const [
-            DrawerHeader(child: Text("World Of God")),
-            ListTile(title: Text("Tracker")),
-            ListTile(title: Text("Audio Messages")),
-            ListTile(title: Text("Quiz")),
-            ListTile(title: Text("Contact Us")),
-            ListTile(title: Text("About Us")),
-            ListTile(title: Text("Share App")),
+
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                "World Of God",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.track_changes),
+              title: Text("Tracker"),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.headphones),
+              title: Text("Audio Messages"),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.quiz),
+              title: Text("Quiz"),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.contact_mail),
+              title: Text("Contact Us"),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.info),
+              title: Text("About Us"),
+            ),
+
+            ListTile(
+              leading: Icon(Icons.share),
+              title: Text("Share App"),
+            ),
           ],
         ),
       ),
 
-      body: pages[index],
+      body: pages[currentIndex],
 
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        onTap: (i){
+        currentIndex: currentIndex,
+
+        onTap: (index) {
           setState(() {
-            index = i;
+            currentIndex = index;
           });
         },
+
+        type: BottomNavigationBarType.fixed,
+
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.menu_book), label: "Bible"),
-          BottomNavigationBarItem(icon: Icon(Icons.music_note), label: "Songs"),
-          BottomNavigationBarItem(icon: Icon(Icons.book), label: "Books"),
-          BottomNavigationBarItem(icon: Icon(Icons.live_tv), label: "Live"),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu_book),
+            label: "Bible",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.music_note),
+            label: "Songs",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book),
+            label: "Books",
+          ),
+
+          BottomNavigationBarItem(
+            icon: Icon(Icons.live_tv),
+            label: "Live",
+          ),
+
         ],
       ),
     );
