@@ -26,6 +26,10 @@ LiveScreen(),
 Widget build(BuildContext context) {
 return Scaffold(
 
+  appBar: AppBar(
+    title: const Text("WOG App"),
+  ),
+
   drawer: Drawer(
     child: ListView(
       children: const [
@@ -117,160 +121,129 @@ return Scaffold(
 }
 
 Widget dashboard() {
-return SingleChildScrollView(
-child: Column(
+return ListView(
+padding: const EdgeInsets.all(16),
 children: [
 
-      Container(
-        width: double.infinity,
-        padding: const EdgeInsets.fromLTRB(20, 50, 20, 30),
-
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xff3a7bd5), Color(0xff00d2ff)],
-          ),
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
-          ),
+    Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xff3a7bd5), Color(0xff00d2ff)],
         ),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: const Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          Text(
+            "Verse of the Day",
+            style: TextStyle(color: Colors.white70),
+          ),
 
-            Text(
-              "Welcome",
-              style: TextStyle(
-                color: Colors.white70,
-                fontSize: 18,
-              ),
+          SizedBox(height: 10),
+
+          Text(
+            "For God so loved the world that he gave his one and only Son.",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
             ),
+          ),
 
-            SizedBox(height: 5),
+          SizedBox(height: 8),
 
-            Text(
-              "WOG App",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
+          Text(
+            "John 3:16",
+            style: TextStyle(
+              color: Colors.white70,
             ),
-
-          ],
-        ),
-      ),
-
-      const SizedBox(height: 20),
-
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
-          padding: const EdgeInsets.all(16),
-
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10,
-              )
-            ],
           ),
 
-          child: const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              Text(
-                "Verse of the Day",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              SizedBox(height: 10),
-
-              Text(
-                "For God so loved the world that he gave his one and only Son.",
-                style: TextStyle(fontSize: 16),
-              ),
-
-              SizedBox(height: 5),
-
-              Text(
-                "John 3:16",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-            ],
-          ),
-        ),
+        ],
       ),
+    ),
 
-      const SizedBox(height: 20),
+    const SizedBox(height: 25),
 
-      Padding(
-        padding: const EdgeInsets.all(16),
-        child: GridView.count(
-
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-
-          crossAxisCount: 2,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-
-          children: [
-
-            feature(Icons.menu_book, "Bible", Colors.blue),
-
-            feature(Icons.music_note, "Songs", Colors.orange),
-
-            feature(Icons.book, "Books", Colors.green),
-
-            feature(Icons.live_tv, "Live", Colors.red),
-
-          ],
-        ),
+    const Text(
+      "Quick Access",
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
       ),
+    ),
 
-    ],
-  ),
+    const SizedBox(height: 15),
+
+    SizedBox(
+      height: 100,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+
+          quickButton(Icons.menu_book, "Bible"),
+          quickButton(Icons.music_note, "Songs"),
+          quickButton(Icons.book, "Books"),
+          quickButton(Icons.live_tv, "Live"),
+
+        ],
+      ),
+    ),
+
+    const SizedBox(height: 25),
+
+    const Text(
+      "Ministry",
+      style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+
+    const SizedBox(height: 10),
+
+    const ListTile(
+      leading: Icon(Icons.headphones),
+      title: Text("Audio Messages"),
+    ),
+
+    const ListTile(
+      leading: Icon(Icons.quiz),
+      title: Text("Quiz"),
+    ),
+
+    const ListTile(
+      leading: Icon(Icons.track_changes),
+      title: Text("Tracker"),
+    ),
+
+  ],
 );
 
 }
 
-Widget feature(IconData icon, String title, Color color) {
+Widget quickButton(IconData icon, String title) {
 
 return Container(
+  width: 90,
+  margin: const EdgeInsets.only(right: 12),
 
   decoration: BoxDecoration(
-    color: color,
-    borderRadius: BorderRadius.circular(20),
+    color: Colors.blue.shade50,
+    borderRadius: BorderRadius.circular(18),
   ),
 
   child: Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
 
-      Icon(icon, size: 50, color: Colors.white),
+      Icon(icon, color: Colors.blue),
 
-      const SizedBox(height: 10),
+      const SizedBox(height: 6),
 
-      Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      )
+      Text(title)
 
     ],
   ),
