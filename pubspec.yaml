@@ -1,5 +1,6 @@
 name: wog_app
-description: World Of God Telugu Bible App
+description: WOG Telugu Bible App
+
 publish_to: "none"
 
 version: 1.0.0+1
@@ -11,30 +12,17 @@ dependencies:
 flutter:
 sdk: flutter
 
-cupertino_icons: ^1.0.2
-
-XML parsing for Bible.xml
-
+cupertino_icons: ^1.0.6
 xml: ^6.3.0
-
-share verses
-
 share_plus: ^7.2.1
-
-bookmarks storage
-
-shared_preferences: ^2.2.2
-
-UI improvements
-
-google_fonts: ^6.2.0
 
 dev_dependencies:
 flutter_test:
 sdk: flutter
 
-flutter:
+flutter_lints: ^3.0.0
 
+flutter:
 uses-material-design: true
 
 assets:
