@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../bible/bible_screen.dart';
 import '../songs/songs_screen.dart';
-import '../books/books_screen.dart';
 import '../live/live_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,9 +15,9 @@ class _HomeScreenState extends State<HomeScreen> {
 int index = 0;
 
 final pages = const [
+SizedBox(),
 BibleScreen(),
 SongsScreen(),
-BooksScreen(),
 LiveScreen(),
 ];
 
@@ -95,6 +94,11 @@ return Scaffold(
     items: const [
 
       BottomNavigationBarItem(
+        icon: Icon(Icons.home),
+        label: "Home",
+      ),
+
+      BottomNavigationBarItem(
         icon: Icon(Icons.menu_book),
         label: "Bible",
       ),
@@ -102,11 +106,6 @@ return Scaffold(
       BottomNavigationBarItem(
         icon: Icon(Icons.music_note),
         label: "Songs",
-      ),
-
-      BottomNavigationBarItem(
-        icon: Icon(Icons.book),
-        label: "Books",
       ),
 
       BottomNavigationBarItem(
