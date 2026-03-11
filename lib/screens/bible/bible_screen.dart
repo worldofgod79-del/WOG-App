@@ -59,6 +59,10 @@ class _BibleScreenState extends State<BibleScreen> {
   @override
   Widget build(BuildContext context) {
 
+    if (books.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
     return Scaffold(
 
       appBar: AppBar(
@@ -81,138 +85,130 @@ class _BibleScreenState extends State<BibleScreen> {
 
       ),
 
-      body: books.isEmpty
-          ? const Center(child: CircularProgressIndicator())
-          : Column(
+      body: Column(
 
-              children: [
+        children: [
 
-                /// BOOK SELECTOR
+          /// BOOK SELECTOR
 
-                DropdownButton(
+          DropdownButton(
 
-                  value: selectedBook,
+            value: selectedBook,
 
-                  items: books.map((book) {
+            items: books.map((book) {
 
-                    return DropdownMenuItem(
+              return DropdownMenuItem(
 
-                      value: book.getAttribute("bname"),
+                value: book.getAttribute("bname"),
 
-                      child: Text(book.getAttribute("bname")),
+                child: Text(book.getAttribute("bname")),
 
-                    );
+              );
 
-                  }).toList(),
+            }).toList(),
 
-                  onChanged: (value) {
+            onChanged: (value) {
 
-                    setState(() {
+              setState(() {
 
-                      selectedBook = value!;
-                      selectedChapter = 1;
+                selectedBook = value!;
+                selectedChapter = 1;
 
-                      loadChapter();
+                loadChapter();
 
-                    });
+              });
 
-                  },
+            },
 
-                ),
+          ),
 
-                /// CHAPTER SELECTOR
+          /// CHAPTER SELECTOR
 
-                DropdownButton(
+          DropdownButton(
 
-                  value: selectedChapter,
+            value: selectedChapter,
 
-                  items: List.generate(150, (i) {
+            items: List.generate(150, (i) {
 
-                    return DropdownMenuItem(
+              return DropdownMenuItem(
 
-                      value: i + 1,
+                value: i + 1,
 
-                      child: Text("Chapter ${i + 1}"),
+                child: Text("Chapter ${i + 1}"),
 
-                    );
+              );
 
-                  }),
+            }),
 
-                  onChanged: (value) {
+            onChanged: (value) {
 
-                    setState(() {
+              setState(() {
 
-                      selectedChapter = value!;
-                      loadChapter();
+                selectedChapter = value!;
+                loadChapter();
 
-                    });
+              });
 
-                  },
+            },
 
-                ),
+          ),
 
-                const Divider(),
+          const Divider(),
 
-                /// VERSES
+          /// VERSES
 
-                Expanded(
+          Expanded(
 
-                  child: ListView.builder(
+            child: ListView.builder(
 
-                    itemCount: verses.length,
+              itemCount: verses.length,
 
-                    itemBuilder: (context, index) {
+              itemBuilder: (context, index) {
 
-                      final verse = verses[index];
+                final verse = verses[index];
 
-                      final text = verse.innerText;
+                final text = verse.innerText;
 
-                      final number = verse.getAttribute("vnumber");
+                final number = verse.getAttribute("vnumber");
 
-                      return Padding(
+                return Padding(
 
-                        padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(12),
 
-                        child: GestureDetector(
+                  child: RichText(
 
-                          onLongPress: () {},
+                    text: TextSpan(
 
-                          child: RichText(
+                      style: const TextStyle(
+                          fontSize: 18, color: Colors.black),
 
-                            text: TextSpan(
+                      children: [
 
-                              style: const TextStyle(
-                                  fontSize: 18, color: Colors.black),
-
-                              children: [
-
-                                TextSpan(
-                                  text: "$number ",
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-
-                                TextSpan(text: text),
-
-                              ],
-
-                            ),
-
-                          ),
-
+                        TextSpan(
+                          text: "$number ",
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold),
                         ),
 
-                      );
+                        TextSpan(text: text),
 
-                    },
+                      ],
+
+                    ),
 
                   ),
 
-                )
+                );
 
-              ],
+              },
 
             ),
+
+          )
+
+        ],
+
+      ),
 
     );
 
