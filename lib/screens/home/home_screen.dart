@@ -121,18 +121,21 @@ return Scaffold(
 }
 
 Widget dashboard() {
+
 return ListView(
-padding: const EdgeInsets.all(16),
-children: [
+  padding: const EdgeInsets.all(16),
+  children: [
 
     Container(
       padding: const EdgeInsets.all(20),
+
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [Color(0xff3a7bd5), Color(0xff00d2ff)],
         ),
         borderRadius: BorderRadius.circular(20),
       ),
+
       child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -156,9 +159,7 @@ children: [
 
           Text(
             "John 3:16",
-            style: TextStyle(
-              color: Colors.white70,
-            ),
+            style: TextStyle(color: Colors.white70),
           ),
 
         ],
@@ -168,28 +169,25 @@ children: [
     const SizedBox(height: 25),
 
     const Text(
-      "Quick Access",
+      "Daily Updates",
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.bold,
       ),
     ),
 
-    const SizedBox(height: 15),
+    const SizedBox(height: 10),
 
-    SizedBox(
-      height: 100,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: [
+    const ListTile(
+      leading: Icon(Icons.notifications),
+      title: Text("Today's devotion available"),
+      subtitle: Text("Tap to read today's message"),
+    ),
 
-          quickButton(Icons.menu_book, "Bible"),
-          quickButton(Icons.music_note, "Songs"),
-          quickButton(Icons.book, "Books"),
-          quickButton(Icons.live_tv, "Live"),
-
-        ],
-      ),
+    const ListTile(
+      leading: Icon(Icons.notifications),
+      title: Text("New sermon uploaded"),
+      subtitle: Text("Listen to today's audio message"),
     ),
 
     const SizedBox(height: 25),
@@ -220,33 +218,6 @@ children: [
     ),
 
   ],
-);
-
-}
-
-Widget quickButton(IconData icon, String title) {
-
-return Container(
-  width: 90,
-  margin: const EdgeInsets.only(right: 12),
-
-  decoration: BoxDecoration(
-    color: Colors.blue.shade50,
-    borderRadius: BorderRadius.circular(18),
-  ),
-
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-
-      Icon(icon, color: Colors.blue),
-
-      const SizedBox(height: 6),
-
-      Text(title)
-
-    ],
-  ),
 );
 
 }
