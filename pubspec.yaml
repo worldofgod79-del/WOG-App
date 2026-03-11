@@ -1,5 +1,5 @@
 name: wog_app
-description: WOG Telugu Bible App
+description: World Of God Telugu Bible App
 
 publish_to: "none"
 
@@ -19,7 +19,6 @@ share_plus: ^7.2.1
 dev_dependencies:
 flutter_test:
 sdk: flutter
-
 flutter_lints: ^3.0.0
 
 flutter:
