@@ -1,112 +1,220 @@
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
-import '../../models/verse.dart';
+import 'package:flutter/services.dart';
+import 'package:xml/xml.dart';
 
-class ChapterScreen extends StatefulWidget {
-
-  final List<Verse> bible;
-  final String book;
-  final int chapter;
-  final double fontSize;
-
-  const ChapterScreen({
-    super.key,
-    required this.bible,
-    required this.book,
-    required this.chapter,
-    required this.fontSize,
-  });
+class BibleScreen extends StatefulWidget {
+  const BibleScreen({super.key});
 
   @override
-  State<ChapterScreen> createState() => _ChapterScreenState();
+  State<BibleScreen> createState() => _BibleScreenState();
 }
 
-class _ChapterScreenState extends State<ChapterScreen> {
+class _BibleScreenState extends State<BibleScreen> {
 
-  Set<int> selected = {};
+  List books = [];
+  String selectedBook = "";
+  int selectedChapter = 1;
+
+  List verses = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadBible();
+  }
+
+  Future loadBible() async {
+
+    final xmlString =
+        await rootBundle.loadString("assets/bible/Bible.xml");
+
+    final document = XmlDocument.parse(xmlString);
+
+    final bibleBooks = document.findAllElements("BIBLEBOOK");
+
+    setState(() {
+
+      books = bibleBooks.toList();
+      selectedBook = books.first.getAttribute("bname")!;
+
+      loadChapter();
+
+    });
+
+  }
+
+  void loadChapter() {
+
+    final book =
+        books.firstWhere((b) => b.getAttribute("bname") == selectedBook);
+
+    final chapter = book
+        .findElements("CHAPTER")
+        .firstWhere((c) => c.getAttribute("cnumber") == "$selectedChapter");
+
+    verses = chapter.findElements("VERS").toList();
+
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    final verses = widget.bible.where((v) =>
-    v.book == widget.book && v.chapter == widget.chapter).toList();
+    return Scaffold(
 
-    return ListView.builder(
+      appBar: AppBar(
 
-      itemCount: verses.length,
+        title: const Text("Telugu Bible"),
 
-      itemBuilder: (context, i) {
+        actions: [
 
-        final verse = verses[i];
-
-        bool isSelected = selected.contains(i);
-
-        return GestureDetector(
-
-          onLongPress: () {
-
-            setState(() {
-              selected.add(i);
-            });
-
-          },
-
-          onTap: () {
-
-            if (selected.isNotEmpty) {
-
-              setState(() {
-
-                if (selected.contains(i)) {
-                  selected.remove(i);
-                } else {
-                  selected.add(i);
-                }
-
-              });
-
-            }
-
-          },
-
-          child: Container(
-
-            padding: const EdgeInsets.all(12),
-
-            color: isSelected ? Colors.yellow.shade200 : null,
-
-            child: RichText(
-
-              text: TextSpan(
-
-                style: TextStyle(
-                  fontSize: widget.fontSize,
-                  color: Colors.black,
-                ),
-
-                children: [
-
-                  TextSpan(
-                    text: "${verse.verse} ",
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-
-                  TextSpan(text: verse.text)
-
-                ],
-
-              ),
-
-            ),
-
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
           ),
 
-        );
+          IconButton(
+            icon: const Icon(Icons.more_vert),
+            onPressed: () {},
+          ),
 
-      },
+        ],
+
+      ),
+
+      body: books.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+
+              children: [
+
+                /// BOOK SELECTOR
+
+                DropdownButton(
+
+                  value: selectedBook,
+
+                  items: books.map((book) {
+
+                    return DropdownMenuItem(
+
+                      value: book.getAttribute("bname"),
+
+                      child: Text(book.getAttribute("bname")),
+
+                    );
+
+                  }).toList(),
+
+                  onChanged: (value) {
+
+                    setState(() {
+
+                      selectedBook = value!;
+                      selectedChapter = 1;
+
+                      loadChapter();
+
+                    });
+
+                  },
+
+                ),
+
+                /// CHAPTER SELECTOR
+
+                DropdownButton(
+
+                  value: selectedChapter,
+
+                  items: List.generate(150, (i) {
+
+                    return DropdownMenuItem(
+
+                      value: i + 1,
+
+                      child: Text("Chapter ${i + 1}"),
+
+                    );
+
+                  }),
+
+                  onChanged: (value) {
+
+                    setState(() {
+
+                      selectedChapter = value!;
+                      loadChapter();
+
+                    });
+
+                  },
+
+                ),
+
+                const Divider(),
+
+                /// VERSES
+
+                Expanded(
+
+                  child: ListView.builder(
+
+                    itemCount: verses.length,
+
+                    itemBuilder: (context, index) {
+
+                      final verse = verses[index];
+
+                      final text = verse.innerText;
+
+                      final number = verse.getAttribute("vnumber");
+
+                      return Padding(
+
+                        padding: const EdgeInsets.all(10),
+
+                        child: GestureDetector(
+
+                          onLongPress: () {},
+
+                          child: RichText(
+
+                            text: TextSpan(
+
+                              style: const TextStyle(
+                                  fontSize: 18, color: Colors.black),
+
+                              children: [
+
+                                TextSpan(
+                                  text: "$number ",
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+
+                                TextSpan(text: text),
+
+                              ],
+
+                            ),
+
+                          ),
+
+                        ),
+
+                      );
+
+                    },
+
+                  ),
+
+                )
+
+              ],
+
+            ),
 
     );
 
   }
-
 }
