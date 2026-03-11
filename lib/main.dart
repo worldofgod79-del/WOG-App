@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'screens/splash/splash_screen.dart';
+import 'screens/bible_screen.dart';
 
 void main() {
   runApp(const WOGApp());
@@ -16,7 +16,7 @@ class WOGApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      home: const BibleScreen(),
     );
   }
 }
