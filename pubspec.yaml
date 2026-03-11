@@ -1,15 +1,41 @@
 name: wog_app
-description: World Of God App
+description: World Of God Telugu Bible App
 publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+flutter:
+sdk: flutter
+
+cupertino_icons: ^1.0.2
+
+XML parsing for Bible.xml
+
+xml: ^6.3.0
+
+share verses
+
+share_plus: ^7.2.1
+
+bookmarks storage
+
+shared_preferences: ^2.2.2
+
+UI improvements
+
+google_fonts: ^6.2.0
+
+dev_dependencies:
+flutter_test:
+sdk: flutter
 
 flutter:
-  uses-material-design: true
+
+uses-material-design: true
+
+assets:
+- assets/bible/Bible.xml
